@@ -1,7 +1,7 @@
 package com.hieunn.paymentservice.listeners;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.hieunn.paymentservice.entities.SagaEvent;
+import com.hieunn.commonlib.dtos.events.SagaEventDto;
 import com.hieunn.paymentservice.enums.RabbitMQQueue;
 import com.hieunn.paymentservice.handlers.UserEventHandler;
 import com.rabbitmq.client.Channel;
@@ -19,7 +19,7 @@ public class UserEventListener {
 
     @RabbitListener(queues = RabbitMQQueue.USER_DEBIT_SUCCEEDED_QUEUE_NAME)
     public void listenUserDebitSucceededEvent(
-            SagaEvent event,
+            SagaEventDto event,
             @SuppressWarnings("unused") Message message,
             @SuppressWarnings("unused") Channel channel
     ) throws JsonProcessingException {
@@ -30,7 +30,7 @@ public class UserEventListener {
 
     @RabbitListener(queues = RabbitMQQueue.USER_DEBIT_FAILED_QUEUE_NAME)
     public void listenUserDebitFailedEvent(
-            SagaEvent event,
+            SagaEventDto event,
             @SuppressWarnings("unused") Message message,
             @SuppressWarnings("unused") Channel channel
     ) throws JsonProcessingException {

@@ -6,5 +6,5 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", uses = { OrderDetailMapper.class })
 public interface OrderMapper {
-    OrderDto.Response toDTO(Order order);
+    OrderDto.Response toResponse(Order order);
 }

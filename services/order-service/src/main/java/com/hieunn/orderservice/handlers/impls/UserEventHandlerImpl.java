@@ -2,13 +2,12 @@ package com.hieunn.orderservice.handlers.impls;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hieunn.commonlib.dtos.events.SagaEventDto;
 import com.hieunn.commonlib.dtos.events.UserDebitEvent;
 import com.hieunn.orderservice.entities.ProcessedSagaEvent;
-import com.hieunn.orderservice.entities.SagaEvent;
 import com.hieunn.orderservice.handlers.AbstractUserEventHandler;
 import com.hieunn.orderservice.repositories.ProcessedSagaEventRepository;
 import com.hieunn.orderservice.services.OrderService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +30,7 @@ public class UserEventHandlerImpl extends AbstractUserEventHandler {
 
     @Override
     @Transactional //Combine the transactions of the updateOrderFailed method and the saveIdempotencyLog into a single transaction
-    public void handleUserDebitFailedEvent(SagaEvent event) throws JsonProcessingException {
+    public void handleUserDebitFailedEvent(SagaEventDto event) throws JsonProcessingException {
         try {
             UserDebitEvent userDebitEvent = objectMapper.readValue(event.getPayload(), UserDebitEvent.class);
 

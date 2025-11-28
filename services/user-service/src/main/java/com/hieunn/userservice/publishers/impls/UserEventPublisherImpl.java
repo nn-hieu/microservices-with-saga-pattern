@@ -3,6 +3,7 @@ package com.hieunn.userservice.publishers.impls;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hieunn.commonlib.dtos.events.OrderCreatedEvent;
+import com.hieunn.commonlib.dtos.events.SagaEventDto;
 import com.hieunn.commonlib.dtos.events.UserDebitEvent;
 import com.hieunn.commonlib.enums.events.UserEvent;
 import com.hieunn.commonlib.publishers.AbstractSagaEventPublisher;
@@ -26,7 +27,7 @@ public class UserEventPublisherImpl implements UserEventPublisher {
     @Override
     @Transactional
     @Async
-    public void publishUserDebitEvent(SagaEvent orderCreatedSucceededSagaEvent, boolean isSuccessful)
+    public void publishUserDebitEvent(SagaEventDto orderCreatedSucceededSagaEvent, boolean isSuccessful)
             throws JsonProcessingException
     {
         try {

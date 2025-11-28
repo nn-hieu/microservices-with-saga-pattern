@@ -2,9 +2,9 @@ package com.hieunn.orderservice.handlers.impls;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hieunn.commonlib.dtos.events.SagaEventDto;
 import com.hieunn.commonlib.dtos.events.TransactionCompletedEvent;
 import com.hieunn.orderservice.entities.ProcessedSagaEvent;
-import com.hieunn.orderservice.entities.SagaEvent;
 import com.hieunn.orderservice.handlers.AbstractPaymentEventHandler;
 import com.hieunn.orderservice.repositories.ProcessedSagaEventRepository;
 import com.hieunn.orderservice.services.OrderService;
@@ -30,7 +30,7 @@ public class PaymentEventHandlerImpl extends AbstractPaymentEventHandler {
 
     @Override
     @Transactional //Combine the transactions of the updateOrderCompleted method and the saveIdempotencyLog into a single transaction
-    public void handleTransactionCompletedEvent(SagaEvent event) throws JsonProcessingException {
+    public void handleTransactionCompletedEvent(SagaEventDto event) throws JsonProcessingException {
         try {
             TransactionCompletedEvent transactionCompletedEvent = objectMapper.readValue(event.getPayload(), TransactionCompletedEvent.class);
 

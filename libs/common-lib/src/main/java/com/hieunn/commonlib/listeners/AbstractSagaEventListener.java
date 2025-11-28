@@ -1,6 +1,7 @@
 package com.hieunn.commonlib.listeners;
 
 import com.hieunn.commonlib.entities.SagaEventBase;
+import com.hieunn.commonlib.mappers.SagaEventBaseMapper;
 import com.hieunn.commonlib.repositories.SagaEventBaseRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 public abstract class AbstractSagaEventListener<T extends SagaEventBase> {
     private final SagaEventBaseRepository<T> sagaEventBaseRepository;
     private final RabbitTemplate rabbitTemplate;
+    private final SagaEventBaseMapper<T> sagaEventBaseMapper;
 
     protected abstract String getExchange();
 
@@ -23,7 +25,11 @@ public abstract class AbstractSagaEventListener<T extends SagaEventBase> {
     @Transactional
     public void listenSagaEvent(T sagaEvent) {
         try {
-            rabbitTemplate.convertAndSend(this.getExchange(), sagaEvent.getEventName(), sagaEvent);
+            rabbitTemplate.convertAndSend(
+                    this.getExchange(),
+                    sagaEvent.getEventName(),
+                    sagaEventBaseMapper.toDto(sagaEvent)
+            );
 
             sagaEventBaseRepository.delete(sagaEvent);
 

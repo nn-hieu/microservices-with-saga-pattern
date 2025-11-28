@@ -1,7 +1,7 @@
 package com.hieunn.orderservice.listeners;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.hieunn.orderservice.entities.SagaEvent;
+import com.hieunn.commonlib.dtos.events.SagaEventDto;
 import com.hieunn.orderservice.enums.RabbitMQQueue;
 import com.hieunn.orderservice.handlers.UserEventHandler;
 import com.rabbitmq.client.Channel;
@@ -11,8 +11,6 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -21,7 +19,7 @@ public class UserEventListener {
 
     @RabbitListener(queues = RabbitMQQueue.USER_DEBIT_FAILED_QUEUE_NAME)
     public void listenUserDebitFailedEvent(
-            SagaEvent event,
+            SagaEventDto event,
             @SuppressWarnings("unused") Message message,
             @SuppressWarnings("unused") Channel channel
     ) throws JsonProcessingException {

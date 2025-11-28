@@ -46,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
 
         orderRepository.save(order);
 
-        OrderDto.Response response = orderMapper.toDTO(order);
+        OrderDto.Response response = orderMapper.toResponse(order);
 
         orderEventPublisher.publishOrderCreatedSucceededEvent(response);
 

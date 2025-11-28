@@ -2,12 +2,12 @@ package com.hieunn.paymentservice.handlers.impls;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hieunn.commonlib.dtos.events.SagaEventDto;
 import com.hieunn.commonlib.dtos.events.UserDebitEvent;
 import com.hieunn.commonlib.dtos.payments.TransactionDto;
 import com.hieunn.commonlib.enums.status.TransactionStatus;
 import com.hieunn.commonlib.exceptions.NotFoundException;
 import com.hieunn.paymentservice.entities.ProcessedSagaEvent;
-import com.hieunn.paymentservice.entities.SagaEvent;
 import com.hieunn.paymentservice.handlers.AbstractUserEventHandler;
 import com.hieunn.paymentservice.publishers.PaymentEventPublisher;
 import com.hieunn.paymentservice.repositories.ProcessedSagaEventRepository;
@@ -44,7 +44,7 @@ public class UserEventHandlerImpl extends AbstractUserEventHandler {
             backoff = @Backoff(delay = 300)
     ) // Handle the race condition where the transaction is created but has not yet been committed to the database when the orderCreatedSucceeded event is processed
     @Transactional // Combine the transactions of the updateStatusByOrderId method and the saveIdempotencyLog into a single transaction
-    public void handleUserDebitSucceededEvent(SagaEvent event) throws JsonProcessingException {
+    public void handleUserDebitSucceededEvent(SagaEventDto event) throws JsonProcessingException {
         try {
             UserDebitEvent userDebitEvent = objectMapper.readValue(event.getPayload(), UserDebitEvent.class);
 
@@ -70,7 +70,7 @@ public class UserEventHandlerImpl extends AbstractUserEventHandler {
             backoff = @Backoff(delay = 300)
     ) // Handle the race condition where the transaction is created but has not yet been committed to the database when the orderCreatedSucceeded event is processed
     @Transactional // Combine the transactions of the updateStatusByOrderId method and the saveIdempotencyLog into a single transaction
-    public void handleUserDebitFailedEvent(SagaEvent event) throws JsonProcessingException {
+    public void handleUserDebitFailedEvent(SagaEventDto event) throws JsonProcessingException {
         try {
             UserDebitEvent userDebitEvent = objectMapper.readValue(event.getPayload(), UserDebitEvent.class);
 

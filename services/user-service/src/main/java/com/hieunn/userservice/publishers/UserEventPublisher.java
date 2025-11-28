@@ -1,8 +1,8 @@
 package com.hieunn.userservice.publishers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.hieunn.userservice.entities.SagaEvent;
+import com.hieunn.commonlib.dtos.events.SagaEventDto;
 
 public interface UserEventPublisher {
-    void publishUserDebitEvent(SagaEvent orderCreatedSucceededSagaEvent, boolean isSuccessful) throws JsonProcessingException;
+    void publishUserDebitEvent(SagaEventDto orderCreatedSucceededSagaEvent, boolean isSuccessful) throws JsonProcessingException;
 }

@@ -1,7 +1,7 @@
 package com.hieunn.orderservice.listeners;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.hieunn.orderservice.entities.SagaEvent;
+import com.hieunn.commonlib.dtos.events.SagaEventDto;
 import com.hieunn.orderservice.enums.RabbitMQQueue;
 import com.hieunn.orderservice.handlers.PaymentEventHandler;
 import com.rabbitmq.client.Channel;
@@ -19,7 +19,7 @@ public class PaymentEventListener {
 
     @RabbitListener(queues = RabbitMQQueue.TRANSACTION_COMPLETED_QUEUE_NAME)
     public void listenTransactionCompletedEvent(
-            SagaEvent event,
+            SagaEventDto event,
             @SuppressWarnings("unused") Message message,
             @SuppressWarnings("unused") Channel channel
     ) throws JsonProcessingException {

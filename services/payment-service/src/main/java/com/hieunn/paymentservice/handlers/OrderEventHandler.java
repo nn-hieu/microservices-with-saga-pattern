@@ -1,8 +1,8 @@
 package com.hieunn.paymentservice.handlers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.hieunn.paymentservice.entities.SagaEvent;
+import com.hieunn.commonlib.dtos.events.SagaEventDto;
 
 public interface OrderEventHandler {
-    void handleOrderCreatedSucceededEvent(SagaEvent event) throws JsonProcessingException;
+    void handleOrderCreatedSucceededEvent(SagaEventDto event) throws JsonProcessingException;
 }

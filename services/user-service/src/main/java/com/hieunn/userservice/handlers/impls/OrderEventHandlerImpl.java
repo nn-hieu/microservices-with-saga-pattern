@@ -3,8 +3,8 @@ package com.hieunn.userservice.handlers.impls;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hieunn.commonlib.dtos.events.OrderCreatedEvent;
+import com.hieunn.commonlib.dtos.events.SagaEventDto;
 import com.hieunn.userservice.entities.ProcessedSagaEvent;
-import com.hieunn.userservice.entities.SagaEvent;
 import com.hieunn.userservice.exceptions.InsufficientFundsException;
 import com.hieunn.userservice.handlers.AbstractOrderEventHandler;
 import com.hieunn.userservice.publishers.UserEventPublisher;
@@ -35,7 +35,7 @@ public class OrderEventHandlerImpl extends AbstractOrderEventHandler {
 
     @Override
     @Transactional // Combine the transactions of the deductBalance method and the saveIdempotencyLog into a single transaction
-    public void handleOrderCreatedSucceededEvent(SagaEvent event) throws JsonProcessingException {
+    public void handleOrderCreatedSucceededEvent(SagaEventDto event) throws JsonProcessingException {
         try {
             OrderCreatedEvent orderCreatedEvent = objectMapper.readValue(event.getPayload(), OrderCreatedEvent.class);
 
