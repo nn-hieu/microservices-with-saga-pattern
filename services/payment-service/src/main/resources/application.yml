@@ -1,0 +1,75 @@
+# Spring Config
+spring:
+  application:
+    name: payment-service
+
+  datasource:
+    url: ${DATABASE_URL:jdbc:h2:mem:payment-db}
+    driverClassName: ${DATABASE_DRIVER:org.h2.Driver}
+    username: ${DATABASE_USERNAME:sa}
+    password: ${DATABASE_PASSWORD:}
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: ${DATABASE_DIALECT:org.hibernate.dialect.H2Dialect}
+
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+    template:
+      retry:
+        enabled: ${RABBITMQ_RETRY_ENABLED:true}
+        max-attempts: ${RABBITMQ_RETRY_MAX-ATTEMPTS:4}
+        initial-interval: ${RABBITMQ_RETRY_INITIAL-INTERVAL:1000}
+        multiplier: ${RABBITMQ_RETRY_MULTIPLIER:2}
+        max-interval: ${RABBITMQ_RETRY_MAX-INTERVAL:5000}
+    message-ttl: ${RABBITMQ_MESSAGE_TTL:1800000}
+
+#Server Config
+server:
+  port: 8084
+
+saga-event:
+  polling-interval: 10000
+
+# Eureka Config
+eureka:
+  client:
+    registry-fetch-interval-seconds: ${EUREKA_CLIENT_REGISTRY-FETCH-INTERVAL:15}
+    healthcheck:
+      enabled: true
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+
+  instance:
+    hostname: ${EUREKA_INSTANCE_HOSTNAME:localhost}
+    prefer-ip-address: true
+    ip-address: ${EUREKA_INSTANCE_IP-ADDRESS:127.0.0.1}
+    instance-id: ${eureka.instance.ip-address}:${spring.application.name}:${server.port}
+    lease-renewal-interval-in-seconds: ${EUREKA_HEARTBEAT_INTERVAL:30}
+    lease-expiration-duration-in-seconds: ${EUREKA_LEASE_EXPIRATION:90}
+
+# Actuator Config
+management:
+  health:
+    rabbit:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+
+# App Config
+app:
+  api-prefix: ${API_PREFIX_PATH:/api}
