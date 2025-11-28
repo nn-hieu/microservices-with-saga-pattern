@@ -3,7 +3,7 @@ package com.hieunn.paymentservice.handlers.impls;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hieunn.commonlib.dtos.events.OrderCreatedEvent;
-import com.hieunn.commonlib.dtos.payments.TransactionDTO;
+import com.hieunn.commonlib.dtos.payments.TransactionDto;
 import com.hieunn.paymentservice.entities.ProcessedSagaEvent;
 import com.hieunn.paymentservice.entities.SagaEvent;
 import com.hieunn.paymentservice.handlers.AbstractOrderEventHandler;
@@ -35,7 +35,7 @@ public class OrderEventHandlerImpl extends AbstractOrderEventHandler {
         try {
             OrderCreatedEvent orderCreatedEvent = objectMapper.readValue(event.getPayload(), OrderCreatedEvent.class);
 
-            TransactionDTO.CreateRequest request = new TransactionDTO.CreateRequest();
+            TransactionDto.CreateRequest request = new TransactionDto.CreateRequest();
             request.setWalletId(orderCreatedEvent.getUserId());
             request.setOrderId(orderCreatedEvent.getOrderId());
             request.setAmount(orderCreatedEvent.getTotalAmount());

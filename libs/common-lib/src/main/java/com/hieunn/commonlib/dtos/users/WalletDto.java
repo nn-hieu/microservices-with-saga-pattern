@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-public class WalletDTO {
+public class WalletDto {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor

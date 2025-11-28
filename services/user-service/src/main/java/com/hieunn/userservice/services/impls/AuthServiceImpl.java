@@ -1,6 +1,6 @@
 package com.hieunn.userservice.services.impls;
 
-import com.hieunn.commonlib.dtos.auths.LoginDTO;
+import com.hieunn.commonlib.dtos.auths.LoginDto;
 import com.hieunn.commonlib.exceptions.NotFoundException;
 import com.hieunn.commonlib.exceptions.UnauthorizedException;
 import com.hieunn.commonlib.utils.JwtUtils;
@@ -23,7 +23,7 @@ public class AuthServiceImpl implements AuthService {
     private final JwtUtils jwtUtils;
 
     @Override
-    public LoginDTO.Response login(LoginDTO.Request request) {
+    public LoginDto.Response login(LoginDto.Request request) {
         User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> {
                     log.error("User not found with username {}", request.getUsername());
@@ -42,7 +42,7 @@ public class AuthServiceImpl implements AuthService {
                 Map.of("userId", user.getId())
         );
 
-        LoginDTO.Response response = new LoginDTO.Response();
+        LoginDto.Response response = new LoginDto.Response();
         response.setToken(token);
 
         return response;

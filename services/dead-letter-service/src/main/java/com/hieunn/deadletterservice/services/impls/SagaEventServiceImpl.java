@@ -1,6 +1,5 @@
 package com.hieunn.deadletterservice.services.impls;
 
-import com.hieunn.commonlib.entities.SagaEventBase;
 import com.hieunn.deadletterservice.entities.SagaEvent;
 import com.hieunn.deadletterservice.repositories.SagaEventRepository;
 import com.hieunn.deadletterservice.services.SagaEventService;
@@ -17,7 +16,7 @@ public class SagaEventServiceImpl implements SagaEventService {
 
     @Override
     @Transactional
-    public SagaEvent save(SagaEventBase event, String originalQueue) {
+    public SagaEvent save(SagaEvent event, String originalQueue) {
 //        SagaEvent sagaEvent = new SagaEvent();
 //        sagaEvent.setSagaId(event.getSagaId());
 //        sagaEvent.setEventName(event.getEventName());

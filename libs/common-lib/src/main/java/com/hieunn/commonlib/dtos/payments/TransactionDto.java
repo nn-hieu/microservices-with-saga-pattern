@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-public class TransactionDTO {
+public class TransactionDto {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor

@@ -1,7 +1,7 @@
 package com.hieunn.orderservice.controllers;
 
 import com.hieunn.commonlib.dtos.ApiResponse;
-import com.hieunn.commonlib.dtos.orders.OrderDTO;
+import com.hieunn.commonlib.dtos.orders.OrderDto;
 import com.hieunn.orderservice.services.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +16,8 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<OrderDTO.Response>> create(@RequestBody @Valid OrderDTO.CreateRequest request) {
-        OrderDTO.Response response = orderService.create(request);
+    public ResponseEntity<ApiResponse<OrderDto.Response>> create(@RequestBody @Valid OrderDto.CreateRequest request) {
+        OrderDto.Response response = orderService.create(request);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)

@@ -1,6 +1,6 @@
 package com.hieunn.paymentservice.services.impls;
 
-import com.hieunn.commonlib.dtos.payments.TransactionDTO;
+import com.hieunn.commonlib.dtos.payments.TransactionDto;
 import com.hieunn.commonlib.enums.status.TransactionStatus;
 import com.hieunn.commonlib.exceptions.NotFoundException;
 import com.hieunn.paymentservice.entities.Transaction;
@@ -21,7 +21,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public TransactionDTO.Response create(TransactionDTO.CreateRequest request) {
+    public TransactionDto.Response create(TransactionDto.CreateRequest request) {
         Transaction transaction = new Transaction();
         transaction.setWalletId(request.getWalletId());
         transaction.setOrderId(request.getOrderId());
@@ -36,7 +36,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public TransactionDTO.Response updateStatus(Transaction transaction, TransactionStatus status) {
+    public TransactionDto.Response updateStatus(Transaction transaction, TransactionStatus status) {
         transaction.setStatus(status);
 
         transactionRepository.save(transaction);
@@ -48,7 +48,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public TransactionDTO.Response updateStatusByOrderId(Integer orderId, TransactionStatus status) {
+    public TransactionDto.Response updateStatusByOrderId(Integer orderId, TransactionStatus status) {
         Transaction transaction = transactionRepository.findById(orderId)
                 .orElseThrow(() -> {
                     log.error("Transaction not found with order id: {}", orderId);

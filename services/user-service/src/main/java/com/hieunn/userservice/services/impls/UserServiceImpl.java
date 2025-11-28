@@ -1,6 +1,6 @@
 package com.hieunn.userservice.services.impls;
 
-import com.hieunn.commonlib.dtos.users.UserDTO;
+import com.hieunn.commonlib.dtos.users.UserDto;
 import com.hieunn.commonlib.exceptions.NotFoundException;
 import com.hieunn.userservice.entities.User;
 import com.hieunn.userservice.exceptions.InsufficientFundsException;
@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDTO.Response register(UserDTO.CreateRequest request) {
+    public UserDto.Response register(UserDto.CreateRequest request) {
         User user = new User();
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(noRollbackFor = InsufficientFundsException.class)
-    public UserDTO.Response deductBalance(Integer userId, Integer amount) {
+    public UserDto.Response deductBalance(Integer userId, Integer amount) {
         if (amount <= 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Amount must be greater than 0");
         }

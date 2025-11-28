@@ -4,14 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hieunn.commonlib.dtos.events.OrderCreatedEvent;
 import com.hieunn.commonlib.enums.events.OrderEvent;
-import com.hieunn.commonlib.dtos.orders.OrderDTO;
+import com.hieunn.commonlib.dtos.orders.OrderDto;
 import com.hieunn.commonlib.publishers.AbstractSagaEventPublisher;
 import com.hieunn.orderservice.entities.SagaEvent;
 import com.hieunn.orderservice.publishers.OrderEventPublisher;
 import com.hieunn.orderservice.repositories.SagaEventRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -31,7 +30,7 @@ public class OrderEventPublisherImpl implements OrderEventPublisher {
     @Override
     @Transactional
     @Async
-    public void publishOrderCreatedSucceededEvent(OrderDTO.Response order) {
+    public void publishOrderCreatedSucceededEvent(OrderDto.Response order) {
         try {
             OrderCreatedEvent orderCreatedEvent = new OrderCreatedEvent();
             orderCreatedEvent.setOrderId(order.getId());

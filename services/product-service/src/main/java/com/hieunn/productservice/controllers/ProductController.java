@@ -1,7 +1,7 @@
 package com.hieunn.productservice.controllers;
 
 import com.hieunn.commonlib.dtos.ApiResponse;
-import com.hieunn.commonlib.dtos.products.ProductDTO;
+import com.hieunn.commonlib.dtos.products.ProductDto;
 import com.hieunn.productservice.services.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +18,9 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<ProductDTO.Response>> create(
-            @RequestBody @Valid ProductDTO.CreateRequest request) {
-        ProductDTO.Response response = productService.create(request);
+    public ResponseEntity<ApiResponse<ProductDto.Response>> create(
+            @RequestBody @Valid ProductDto.CreateRequest request) {
+        ProductDto.Response response = productService.create(request);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -28,10 +28,10 @@ public class ProductController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ApiResponse<ProductDTO.Response>> update(
+    public ResponseEntity<ApiResponse<ProductDto.Response>> update(
             @PathVariable Integer id,
-            @RequestBody @Valid ProductDTO.UpdateRequest request) {
-        ProductDTO.Response response = productService.update(id, request);
+            @RequestBody @Valid ProductDto.UpdateRequest request) {
+        ProductDto.Response response = productService.update(id, request);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -48,8 +48,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<ProductDTO.Response>>> getAll() {
-        List<ProductDTO.Response> response = productService.getAll();
+    public ResponseEntity<ApiResponse<List<ProductDto.Response>>> getAll() {
+        List<ProductDto.Response> response = productService.getAll();
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -57,8 +57,8 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<ProductDTO.Response>> getById(@PathVariable Integer id) {
-        ProductDTO.Response response = productService.getById(id);
+    public ResponseEntity<ApiResponse<ProductDto.Response>> getById(@PathVariable Integer id) {
+        ProductDto.Response response = productService.getById(id);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

@@ -2,7 +2,7 @@ package com.hieunn.paymentservice.publishers.impls;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hieunn.commonlib.dtos.payments.TransactionDTO;
+import com.hieunn.commonlib.dtos.payments.TransactionDto;
 import com.hieunn.commonlib.enums.events.PaymentEvent;
 import com.hieunn.commonlib.publishers.AbstractSagaEventPublisher;
 import com.hieunn.paymentservice.entities.SagaEvent;
@@ -26,7 +26,7 @@ public class PaymentEventPublisherImpl implements PaymentEventPublisher {
     @Override
     @Transactional
     @Async
-    public void publishTransactionCompletedEvent(String sagaId, TransactionDTO.Response transaction) {
+    public void publishTransactionCompletedEvent(String sagaId, TransactionDto.Response transaction) {
         try {
             TransactionCompletedEvent transactionCompletedEvent = new TransactionCompletedEvent();
             transactionCompletedEvent.setTransactionId(transaction.getId());

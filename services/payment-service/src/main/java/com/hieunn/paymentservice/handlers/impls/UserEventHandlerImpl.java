@@ -3,7 +3,7 @@ package com.hieunn.paymentservice.handlers.impls;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hieunn.commonlib.dtos.events.UserDebitEvent;
-import com.hieunn.commonlib.dtos.payments.TransactionDTO;
+import com.hieunn.commonlib.dtos.payments.TransactionDto;
 import com.hieunn.commonlib.enums.status.TransactionStatus;
 import com.hieunn.commonlib.exceptions.NotFoundException;
 import com.hieunn.paymentservice.entities.ProcessedSagaEvent;
@@ -48,7 +48,7 @@ public class UserEventHandlerImpl extends AbstractUserEventHandler {
         try {
             UserDebitEvent userDebitEvent = objectMapper.readValue(event.getPayload(), UserDebitEvent.class);
 
-            TransactionDTO.Response transaction = transactionService.updateStatusByOrderId(
+            TransactionDto.Response transaction = transactionService.updateStatusByOrderId(
                     userDebitEvent.getOrderId(),
                     TransactionStatus.COMPLETED
             );

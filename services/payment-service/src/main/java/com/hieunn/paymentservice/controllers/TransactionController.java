@@ -1,7 +1,7 @@
 package com.hieunn.paymentservice.controllers;
 
 import com.hieunn.commonlib.dtos.ApiResponse;
-import com.hieunn.commonlib.dtos.payments.TransactionDTO;
+import com.hieunn.commonlib.dtos.payments.TransactionDto;
 import com.hieunn.paymentservice.services.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,8 +18,8 @@ public class TransactionController {
     private final TransactionService transactionService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<TransactionDTO.Response>> create(@RequestBody TransactionDTO.CreateRequest request) {
-        TransactionDTO.Response response = transactionService.create(request);
+    public ResponseEntity<ApiResponse<TransactionDto.Response>> create(@RequestBody TransactionDto.CreateRequest request) {
+        TransactionDto.Response response = transactionService.create(request);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)

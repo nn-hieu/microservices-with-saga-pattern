@@ -1,9 +1,9 @@
 package com.hieunn.userservice.services;
 
-import com.hieunn.commonlib.dtos.users.UserDTO;
+import com.hieunn.commonlib.dtos.users.UserDto;
 
 public interface UserService {
-    UserDTO.Response register(UserDTO.CreateRequest request);
+    UserDto.Response register(UserDto.CreateRequest request);
 
-    UserDTO.Response deductBalance(Integer userId, Integer amount);
+    UserDto.Response deductBalance(Integer userId, Integer amount);
 }

@@ -1,7 +1,7 @@
 package com.hieunn.userservice.controllers;
 
 import com.hieunn.commonlib.dtos.ApiResponse;
-import com.hieunn.commonlib.dtos.users.UserDTO;
+import com.hieunn.commonlib.dtos.users.UserDto;
 import com.hieunn.userservice.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +19,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<UserDTO.Response>> register(@RequestBody @Valid UserDTO.CreateRequest request) {
-        UserDTO.Response response = userService.register(request);
+    public ResponseEntity<ApiResponse<UserDto.Response>> register(@RequestBody @Valid UserDto.CreateRequest request) {
+        UserDto.Response response = userService.register(request);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)

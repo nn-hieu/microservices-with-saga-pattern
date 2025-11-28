@@ -1,8 +1,8 @@
 package com.hieunn.orderservice.services.impls;
 
-import com.hieunn.commonlib.dtos.orders.OrderDTO;
-import com.hieunn.commonlib.dtos.orders.OrderDetailDTO;
-import com.hieunn.commonlib.dtos.products.ProductDTO;
+import com.hieunn.commonlib.dtos.orders.OrderDto;
+import com.hieunn.commonlib.dtos.orders.OrderDetailDto;
+import com.hieunn.commonlib.dtos.products.ProductDto;
 import com.hieunn.commonlib.enums.status.OrderStatus;
 import com.hieunn.commonlib.exceptions.NotFoundException;
 import com.hieunn.orderservice.clients.ProductClient;
@@ -28,12 +28,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public OrderDTO.Response create(OrderDTO.CreateRequest request) {
+    public OrderDto.Response create(OrderDto.CreateRequest request) {
         Order order = new Order();
         order.setUserId(request.getUserId());
 
-        for (OrderDetailDTO.DetailCreateRequest detail : request.getOrderDetails()) {
-            ProductDTO.Response product = productClient.getById(detail.getProductId()).getData();
+        for (OrderDetailDto.DetailCreateRequest detail : request.getOrderDetails()) {
+            ProductDto.Response product = productClient.getById(detail.getProductId()).getData();
 
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setOrder(order);
@@ -46,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
 
         orderRepository.save(order);
 
-        OrderDTO.Response response = orderMapper.toDTO(order);
+        OrderDto.Response response = orderMapper.toDTO(order);
 
         orderEventPublisher.publishOrderCreatedSucceededEvent(response);
 

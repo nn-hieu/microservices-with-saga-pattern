@@ -7,14 +7,14 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-public class UserDTO {
+public class UserDto {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response {
         private Integer id;
         private String username;
-        private WalletDTO.Response wallet;
+        private WalletDto.Response wallet;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
     }

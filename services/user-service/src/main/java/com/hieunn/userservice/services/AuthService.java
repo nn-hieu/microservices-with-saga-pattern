@@ -1,7 +1,7 @@
 package com.hieunn.userservice.services;
 
-import com.hieunn.commonlib.dtos.auths.LoginDTO;
+import com.hieunn.commonlib.dtos.auths.LoginDto;
 
 public interface AuthService {
-    LoginDTO.Response login(LoginDTO.Request request);
+    LoginDto.Response login(LoginDto.Request request);
 }

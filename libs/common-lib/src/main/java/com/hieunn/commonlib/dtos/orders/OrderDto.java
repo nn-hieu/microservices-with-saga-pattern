@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class OrderDTO {
+public class OrderDto {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
@@ -20,7 +20,7 @@ public class OrderDTO {
         private OrderStatus status;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
-        private List<OrderDetailDTO.Response> orderDetails;
+        private List<OrderDetailDto.Response> orderDetails;
     }
 
     @Data
@@ -30,6 +30,6 @@ public class OrderDTO {
         private Integer userId;
 
         @Valid
-        private List<OrderDetailDTO.DetailCreateRequest> orderDetails;
+        private List<OrderDetailDto.DetailCreateRequest> orderDetails;
     }
 }

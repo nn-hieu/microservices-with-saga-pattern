@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-public class ProductDTO {
+public class ProductDto {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor

@@ -1,17 +1,17 @@
 package com.hieunn.productservice.services;
 
-import com.hieunn.commonlib.dtos.products.ProductDTO;
+import com.hieunn.commonlib.dtos.products.ProductDto;
 
 import java.util.List;
 
 public interface ProductService {
-    ProductDTO.Response create(ProductDTO.CreateRequest request);
+    ProductDto.Response create(ProductDto.CreateRequest request);
 
-    ProductDTO.Response update(Integer id, ProductDTO.UpdateRequest request);
+    ProductDto.Response update(Integer id, ProductDto.UpdateRequest request);
 
     void delete(Integer id);
 
-    List<ProductDTO.Response> getAll();
+    List<ProductDto.Response> getAll();
 
-    ProductDTO.Response getById(Integer id);
+    ProductDto.Response getById(Integer id);
 }
