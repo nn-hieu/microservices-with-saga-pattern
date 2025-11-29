@@ -1,7 +1,6 @@
 package com.hieunn.deadletterservice.entities;
 
 import com.hieunn.commonlib.entities.SagaEventBase;
-import com.hieunn.commonlib.enums.constants.ServiceName;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -16,6 +15,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EqualsAndHashCode(callSuper = true)
 @EntityListeners(AuditingEntityListener.class)
 public class SagaEvent extends SagaEventBase {
-//    @Column(nullable = false, length = 50)
-//    private String originalQueue;
+    @Column(nullable = false, length = 70)
+    private String queue;
+
+    @Column(nullable = false, length = 50)
+    private String exchange;
 }

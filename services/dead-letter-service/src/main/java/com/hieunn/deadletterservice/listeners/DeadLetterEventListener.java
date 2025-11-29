@@ -1,7 +1,6 @@
 package com.hieunn.deadletterservice.listeners;
 
-import com.hieunn.commonlib.entities.SagaEventBase;
-import com.hieunn.deadletterservice.entities.SagaEvent;
+import com.hieunn.commonlib.dtos.events.SagaEventDto;
 import com.hieunn.deadletterservice.enums.RabbitMQQueue;
 import com.hieunn.deadletterservice.services.SagaEventService;
 import lombok.RequiredArgsConstructor;
@@ -20,19 +19,22 @@ public class DeadLetterEventListener {
     private final SagaEventService sagaEventService;
 
     @RabbitListener(queues = RabbitMQQueue.DQL_NAME)
-    public void listenDeadLetterEvent(SagaEvent event, Message message) {
+    public void listenDeadLetterEvent(SagaEventDto event, Message message) {
         log.info("Received event with name: {}, payload: {}", event.getEventName(), event.getPayload());
 
         @SuppressWarnings("unchecked")
         List<Map<String, Object>> xDeathHeader =
                 (List<Map<String, Object>>) message.getMessageProperties().getHeaders().get("x-death");
 
-        String originalQueue = null;
+        String queue = "";
+        String exchange = "";
 
         if (xDeathHeader != null && !xDeathHeader.isEmpty()) {
-            originalQueue = (String) xDeathHeader.getFirst().get("queue");
+            Map<String, Object> deathInfo = xDeathHeader.getFirst();
+            queue = (String) deathInfo.get("queue");
+            exchange = (String) deathInfo.get("exchange");
         }
 
-        sagaEventService.save(event, originalQueue);
+        sagaEventService.save(event, queue, exchange);
     }
 }

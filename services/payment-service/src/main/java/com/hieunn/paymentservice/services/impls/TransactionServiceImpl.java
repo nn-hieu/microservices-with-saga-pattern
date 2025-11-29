@@ -49,7 +49,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     @Transactional
     public TransactionDto.Response updateStatusByOrderId(Integer orderId, TransactionStatus status) {
-        Transaction transaction = transactionRepository.findById(orderId)
+        Transaction transaction = transactionRepository.findByOrderId(orderId)
                 .orElseThrow(() -> {
                     log.error("Transaction not found with order id: {}", orderId);
 

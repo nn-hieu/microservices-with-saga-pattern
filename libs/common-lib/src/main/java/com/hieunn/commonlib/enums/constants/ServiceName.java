@@ -14,4 +14,14 @@ public enum ServiceName {
     ServiceName(String value) {
         this.value = value;
     }
+
+    public static ServiceName fromValue(String value) {
+        for (ServiceName service : ServiceName.values()) {
+            if (service.getValue().equalsIgnoreCase(value)) {
+                return service;
+            }
+        }
+
+        return null;
+    }
 }

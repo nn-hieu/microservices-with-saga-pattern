@@ -1,5 +1,6 @@
 package com.hieunn.deadletterservice.services.impls;
 
+import com.hieunn.commonlib.dtos.events.SagaEventDto;
 import com.hieunn.deadletterservice.entities.SagaEvent;
 import com.hieunn.deadletterservice.repositories.SagaEventRepository;
 import com.hieunn.deadletterservice.services.SagaEventService;
@@ -16,16 +17,15 @@ public class SagaEventServiceImpl implements SagaEventService {
 
     @Override
     @Transactional
-    public SagaEvent save(SagaEvent event, String originalQueue) {
-//        SagaEvent sagaEvent = new SagaEvent();
-//        sagaEvent.setSagaId(event.getSagaId());
-//        sagaEvent.setEventName(event.getEventName());
-//        sagaEvent.setPayload(event.getPayload());
-//        sagaEvent.setSourceService(event.getSourceService());
-//            sagaEvent.setOriginalQueue(originalQueue);
+    public SagaEvent save(SagaEventDto event, String queue, String exchange) {
+        SagaEvent sagaEvent = new SagaEvent();
+        sagaEvent.setSagaId(event.getSagaId());
+        sagaEvent.setEventName(event.getEventName());
+        sagaEvent.setPayload(event.getPayload());
+        sagaEvent.setSourceService(event.getSourceService());
+        sagaEvent.setQueue(queue);
+        sagaEvent.setExchange(exchange);
 
-//        return sagaEventRepository.saveAndFlush(sagaEvent);
-
-        return null;
+        return sagaEventRepository.save(sagaEvent);
     }
 }

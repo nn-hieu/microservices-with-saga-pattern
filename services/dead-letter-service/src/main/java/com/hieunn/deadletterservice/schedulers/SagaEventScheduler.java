@@ -1,16 +1,16 @@
 package com.hieunn.deadletterservice.schedulers;
 
-import com.hieunn.commonlib.enums.events.OrderEvent;
-import com.hieunn.commonlib.enums.events.PaymentEvent;
-import com.hieunn.commonlib.enums.events.UserEvent;
+import com.hieunn.commonlib.enums.constants.ServiceName;
 import com.hieunn.deadletterservice.entities.SagaEvent;
-import com.hieunn.deadletterservice.handlers.OrderEventHandler;
-import com.hieunn.deadletterservice.handlers.PaymentEventHandler;
-import com.hieunn.deadletterservice.handlers.UserEventHandler;
+import com.hieunn.deadletterservice.mappers.SagaEventMapper;
 import com.hieunn.deadletterservice.repositories.SagaEventRepository;
+import com.hieunn.deadletterservice.utils.EurekaUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,29 +19,40 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SagaEventScheduler {
     private final SagaEventRepository sagaEventRepository;
-    private final OrderEventHandler orderEventHandler;
-    private final UserEventHandler userEventHandler;
-    private final PaymentEventHandler paymentEventHandler;
+    private final EurekaUtil eurekaUtil;
+    private final RabbitTemplate rabbitTemplate;
+    private final SagaEventMapper sagaEventMapper;
 
     @Scheduled(fixedDelayString = "${saga-event.polling-interval}")
+    @Transactional
     public void handleSagaEvent() {
         if (sagaEventRepository.count() == 0) {
             return;
         }
 
-        List<SagaEvent> sagaEvents = sagaEventRepository.findAll();
+        List<SagaEvent> events = sagaEventRepository.findAll();
 
-        for (SagaEvent sagaEvent : sagaEvents) {
-            if (!shouldRetryNow(sagaEvent)) continue;
+        for (SagaEvent event : events) {
+            if (!shouldRetryNow(event)) continue;
 
-            String eventName = sagaEvent.getEventName();
+            String[] queueParts = event.getQueue().split("\\.");
+            ServiceName serviceName = ServiceName.fromValue(queueParts[queueParts.length - 1]);
 
-            if (OrderEvent.isOrderEvent(eventName)) {
-                orderEventHandler.handleOrderEvent(sagaEvent);
-            } else if (UserEvent.isUserEvent(eventName)) {
-                userEventHandler.handleUserEvent(sagaEvent);
-            } else if (PaymentEvent.isPaymentEvent(eventName)) {
-                paymentEventHandler.handlePaymentEvent(sagaEvent);
+            if (eurekaUtil.areServicesUp(serviceName)) {
+                try {
+                    rabbitTemplate.convertAndSend(
+                            event.getExchange(),
+                            event.getEventName(),
+                            sagaEventMapper.toDto(event)
+                    );
+
+                    sagaEventRepository.delete(event);
+                } catch (AmqpException e) {
+                    event.setRetryCount(event.getRetryCount() + 1);
+                    event.setLastAttemptAt(LocalDateTime.now());
+
+                    sagaEventRepository.save(event);
+                }
             }
         }
     }
