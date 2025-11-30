@@ -34,7 +34,7 @@ spring:
         initial-interval: ${RABBITMQ_RETRY_INITIAL-INTERVAL:1000}
         multiplier: ${RABBITMQ_RETRY_MULTIPLIER:2}
         max-interval: ${RABBITMQ_RETRY_MAX-INTERVAL:5000}
-    message-ttl: ${RABBITMQ_MESSAGE_TTL:1800000}
+    message-ttl: ${RABBITMQ_MESSAGE_TTL:10000}
 
 #Server Config
 server:
